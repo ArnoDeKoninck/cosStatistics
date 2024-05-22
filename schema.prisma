@@ -1,0 +1,32 @@
+// schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url = env("POSTGRES_PRISMA_URL") // uses connection pooling
+  directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
+}
+
+model Logs {
+  id            String    @default(cuid()) @id
+  session       Int       @default(1)
+  name          String    
+  damage        Int
+  createdAt     DateTime  @default(now()) @map(name: "created_at")
+  updatedAt     DateTime  @updatedAt @map(name: "updated_at")
+  character     User      @relation(fields: [name], references: [name])
+}
+
+model User {
+  id            String    @default(cuid()) @id
+  name          String    @unique 
+  class         String?   
+  subclass      String?
+  logs          Logs[]
+  createdAt     DateTime  @default(now()) @map(name: "created_at")
+  updatedAt     DateTime  @updatedAt @map(name: "updated_at")
+  @@map(name: "users")
+}
