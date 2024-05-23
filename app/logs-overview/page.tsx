@@ -1,19 +1,9 @@
-import { GetUsers } from "../page";
 import prisma from "@/lib/prisma";
 import CreateLog from "../components/createLog/CreateLog";
-import TotalDamageGraph from "../components/TotalDamageGraph/TotalDamageGraph";
+import GetUsers from "../helpers/GetUsers";
+import GetSessions from "../helpers/GetSessions";
 
-export async function GetSessions() {
-	const sessions = await prisma.logs.findMany({
-		distinct: ["session"],
-		select: {
-			session: true,
-		},
-	});
-	return sessions;
-}
-
-const logsOverview = async () => {
+const LogsOverview = async () => {
 	const users = await GetUsers();
 	const sessions = await GetSessions();
 
@@ -31,4 +21,4 @@ const logsOverview = async () => {
 	);
 };
 
-export default logsOverview;
+export default LogsOverview;

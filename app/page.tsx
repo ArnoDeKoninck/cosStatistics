@@ -1,13 +1,6 @@
-import Image from "next/image";
-import { PrismaClient } from "@prisma/client";
 import Link from "next/link";
 import TotalDamageGraph from "./components/TotalDamageGraph/TotalDamageGraph";
-
-export async function GetUsers() {
-	const prisma = new PrismaClient();
-	const users = await prisma.user.findMany();
-	return users;
-}
+import GetUsers from "./helpers/GetUsers";
 
 export default async function Home() {
 	const foundUsers = await GetUsers();
