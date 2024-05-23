@@ -1,3 +1,4 @@
+import prisma from "@/lib/prisma";
 export default async function GetSessions() {
 	const sessions = await prisma.logs.findMany({
 		distinct: ["session"],
